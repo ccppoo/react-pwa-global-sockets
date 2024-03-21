@@ -34,6 +34,7 @@
     "@mui/material": "^5.15.0",
     "@mui/system": "^5.15.0",
     "@mui/utils": "^5.15.0",
+    "eslint-plugin-json": "^3.1.0",
     "is-mobile": "^4.0.0",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
@@ -42,7 +43,9 @@
     "react-helmet-async": "^2.0.3",
     "react-hotkeys-hook": "^4.4.1",
     "react-router-dom": "^6.21.0",
-    "recoil": "^0.7.7"
+    "react-use-websocket": "^4.7.0",
+    "recoil": "^0.7.7",
+    "vite-plugin-mkcert": "^1.17.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.1",
