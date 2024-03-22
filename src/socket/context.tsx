@@ -17,11 +17,12 @@ export const UseFullWebSocketProvider = ({
   children: ReactNode;
   config: UseFullSocketConfig;
 }) => {
-  const { url, onOpen, messageSenders, messageReceivers } = config;
+  const _config = { topicEnqueueMax: 30, ...config };
+  const { url, onOpen, messageSenders, messageReceivers, topicEnqueueMax } = _config;
 
   const { lastestGQM, _globalQueue, system } = useGlobalQueue({
     WebSocket_URL: url,
-    topicEnqueueMax: config.topicEnqueueMax || 30,
+    topicEnqueueMax: topicEnqueueMax,
   });
   const { setWebSocketState } = useGlobalWebSocketState({ WebSocket_URL: url });
 
