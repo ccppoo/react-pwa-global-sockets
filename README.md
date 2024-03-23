@@ -1,7 +1,7 @@
 # React-PWA - `v2` is here 🚀🎉⚡️
 
 ```bash
-git config --unset core.hooksPath  
+git config --unset core.hooksPath
 ```
 
 #### Husky
@@ -60,23 +60,9 @@ In order to do a production build, run:
 npm run build # yarn build
 ```
 
-There are other scripts as well:
-
-- `prettier:check` - check if all files are formatted according to the rules.
-- `lint:check` - check if all files are linted according to the rules.
-- `ts:check` - check if all files are typed according to the rules.
-- `test:unit` - run unit tests.
-- `test:e2e` - run e2e tests.
-- `test:e2e:ui` - run e2e tests in UI mode.
-- `preview` - boot up local static web server that serves the files from `dist` folder. It's an easy way to check if the production build looks OK in your local environment.
-- `https-preview` - is the same as `preview`, but with HTTPS. It's handy for testing your PWA capabilities in your local environment.
-- `prepare` - install `husky` and copy the default `env/.shared` file to `.env` file. This script is being run automatically after `npm install` or `yarn`.
-
-## [Live Demo](https://react-pwa.surenatoyan.com/)
-
-<div>
- <img src="./public/demo-dark.png" width="280" title="Dark demo"> <img src="./public/demo-light.png" width="280" title="Light demo">
-</div>
+```bash
+npx prettier --check ./src
+```
 
 ## License
 
