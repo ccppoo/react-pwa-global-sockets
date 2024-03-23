@@ -1,14 +1,12 @@
-import { useRecoilState} from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import type { GlobalQueueMessage, GlobalQueueMessages } from './types';
 
-import * as util from './utils'
+import * as util from './utils';
 
-import {WSSenderQueueBySocketURL} from './atom'
+import { WSSenderQueueBySocketURL } from './atom';
 
-
-export default function usePublisherQueue({WebSocket_URL } : {WebSocket_URL : string}) {
-
+export default function usePublisherQueue({ WebSocket_URL }: { WebSocket_URL: string }) {
   // WS 보내는거 대기하는 큐
   const [_globalQueue, _setGlobalQueue] = useRecoilState(WSSenderQueueBySocketURL(WebSocket_URL));
 
@@ -23,7 +21,8 @@ export default function usePublisherQueue({WebSocket_URL } : {WebSocket_URL : st
         },
       ],
     );
-    return
+
+    return;
   }
 
   function clearSenderQueue() {
@@ -48,7 +47,6 @@ export default function usePublisherQueue({WebSocket_URL } : {WebSocket_URL : st
     return qMSG;
   }
 
-  
   function popToSend(topic?: string): GlobalQueueMessage | undefined {
     if (_globalQueue.length > 0) {
       if (topic) return _pop_topic(topic);
@@ -57,14 +55,16 @@ export default function usePublisherQueue({WebSocket_URL } : {WebSocket_URL : st
     return undefined;
   }
 
+  const lastestGQM = _globalQueue.length > 0 ? _globalQueue[0] : undefined;
+
   return {
     _globalQueue: _globalQueue,
-    lastestGQM: _globalQueue.length > 0 ? _globalQueue[0] : undefined,
+    lastestGQM: lastestGQM,
     system: {
-      enqueueMsg : enqueueMsgToSend,
-      clearQueue : clearSenderQueue,
+      enqueueMsg: enqueueMsgToSend,
+      clearQueue: clearSenderQueue,
       consume: {
-        pop : popToSend,
+        pop: popToSend,
       },
     },
   };
