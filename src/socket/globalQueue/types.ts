@@ -13,3 +13,8 @@ export type GetAllUsersType = {
   roomName: string;
 } & _GlobalQueueMessage;
 
+export type TopicMessageReceived = Record<string, GlobalQueueMessages>
+
+
+export type URL = string;
+export type URL_TOPIC = string;
