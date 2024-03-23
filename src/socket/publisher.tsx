@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { selectorFamily, useRecoilState, useRecoilValue } from 'recoil';
 
 import { UseFullSocketAtom as ufsAtom, usePublisherQueue } from './globalQueue';
-import { useRecoilState, selectorFamily, useRecoilValue } from 'recoil';
+import type { PublishOption } from './types';
 
-export const usePublisher = ({ url, topic }: { url: string; topic: string }) => {
+export const usePublisher = ({ url, topic }: PublishOption) => {
   const { system } = usePublisherQueue({ WebSocket_URL: url });
 
   function publishMessage(obj: any) {
