@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
+import { selectorFamily, useRecoilState, useRecoilValue } from 'recoil';
+
 import { UseFullSocketAtom as ufsAtom } from './globalQueue';
 import type { GlobalQueueMessage, GlobalQueueMessages } from './globalQueue/types';
 
-import { useRecoilState, selectorFamily, useRecoilValue } from 'recoil';
-
-interface subsciberOptions {
+interface SubscribeOption {
   url: string;
   topic: string;
 }
 
-export const useSubsciber = (options: subsciberOptions) => {
+export const useSubscriber = (options: SubscribeOption) => {
   const _recoilState = ufsAtom.WSReceiverQueueBySocketURL(options.url);
   const [_value, _set] = useRecoilState(_recoilState);
   const [latestMessage, setLatestMessage] = useState<GlobalQueueMessage | undefined>(undefined);

@@ -1,26 +1,27 @@
+import { Box, Button, Typography } from '@mui/material';
+
 import Meta from '@/components/Meta';
-import { FullSizeCenteredFlexBox, FlexBox } from '@/components/styled';
+import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
+import { usePublisher } from '@/socket/publisher';
+import { useSubscriber } from '@/socket/subscriber';
 
 import { Image } from './styled';
-import { useSubsciber } from '@/socket/subscriber';
-import { usePublisher } from '@/socket/publisher';
-import { Typography, Box, Button } from '@mui/material';
 
 function Chat() {
   const DEV_backend = 'wss://localhost:8443';
 
-  const { latestMessage: pongMsg111, all } = useSubsciber({
+  const { latestMessage: pongMsg111, all } = useSubscriber({
     url: `${DEV_backend}/dev/111`,
     topic: 'pong',
   });
 
-  const { latestMessage: pongMsg555 } = useSubsciber({
+  const { latestMessage: pongMsg555 } = useSubscriber({
     url: `${DEV_backend}/dev/555`,
     topic: 'pong',
   });
 
   const { publish } = usePublisher({ url: `${DEV_backend}/echo`, topic: 'echo' });
-  const { latestMessage } = useSubsciber({ url: `${DEV_backend}/echo`, topic: 'echo' });
+  const { latestMessage } = useSubscriber({ url: `${DEV_backend}/echo`, topic: 'echo' });
 
   return (
     <>

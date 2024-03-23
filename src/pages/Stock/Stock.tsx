@@ -1,19 +1,20 @@
+import { Box, Typography } from '@mui/material';
+
 import Meta from '@/components/Meta';
-import { FullSizeCenteredFlexBox, FlexBox } from '@/components/styled';
+import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
+import { useSubscriber } from '@/socket/subscriber';
 
 import { Image } from './styled';
-import { useSubsciber } from '@/socket/subscriber';
-import { Typography, Box } from '@mui/material';
 
 function Stock() {
   const DEV_backend = 'wss://localhost:8443/dev';
 
-  // const { latestMessage: pongMsg111, all } = useSubsciber({
+  // const { latestMessage: pongMsg111, all } = useSubscriber({
   //   url: `${DEV_backend}/111`,
   //   topic: 'pong',
   // });
 
-  // const { latestMessage: pongMsg555 } = useSubsciber({ url: `${DEV_backend}/555`, topic: 'pong' });
+  // const { latestMessage: pongMsg555 } = useSubscriber({ url: `${DEV_backend}/555`, topic: 'pong' });
 
   return (
     <>
