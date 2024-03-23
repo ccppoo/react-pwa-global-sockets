@@ -3,17 +3,24 @@ import { FullSizeCenteredFlexBox, FlexBox } from '@/components/styled';
 
 import { Image } from './styled';
 import { useSubsciber } from '@/socket/subscriber';
-import { Typography, Box } from '@mui/material';
+import { usePublisher } from '@/socket/publisher';
+import { Typography, Box, Button } from '@mui/material';
 
 function Chat() {
-  const DEV_backend = 'wss://localhost:8443/dev';
+  const DEV_backend = 'wss://localhost:8443';
 
   const { latestMessage: pongMsg111, all } = useSubsciber({
-    url: `${DEV_backend}/111`,
+    url: `${DEV_backend}/dev/111`,
     topic: 'pong',
   });
 
-  const { latestMessage: pongMsg555 } = useSubsciber({ url: `${DEV_backend}/555`, topic: 'pong' });
+  const { latestMessage: pongMsg555 } = useSubsciber({
+    url: `${DEV_backend}/dev/555`,
+    topic: 'pong',
+  });
+
+  const { publish } = usePublisher({ url: `${DEV_backend}/echo`, topic: 'echo' });
+  const { latestMessage } = useSubsciber({ url: `${DEV_backend}/echo`, topic: 'echo' });
 
   return (
     <>
@@ -35,10 +42,28 @@ function Chat() {
 
         <FlexBox sx={{ flexDirection: 'column', alignItems: 'center', rowGap: 2 }}>
           <FlexBox>
-            <Typography>id : 555</Typography>
+            <Typography>Echo Button</Typography>
           </FlexBox>
-          <FlexBox>
-            <Typography>recentMessage pong : {JSON.stringify(pongMsg555?.message)}</Typography>
+          <FlexBox sx={{ flexDirection: 'column' }}>
+            <FlexBox>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  const _time = new Date().toLocaleTimeString();
+                  publish({
+                    message: _time,
+                  });
+                  console.log(`보낸거 : ${_time}`);
+                }}
+              >
+                Click To Send Ping
+              </Button>
+            </FlexBox>
+            <FlexBox>
+              <Typography>
+                {latestMessage ? `최근에 보낸 : ${latestMessage.message}` : ''}
+              </Typography>
+            </FlexBox>
           </FlexBox>
         </FlexBox>
       </FullSizeCenteredFlexBox>

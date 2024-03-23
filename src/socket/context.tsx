@@ -53,7 +53,7 @@ export const UseFullWebSocketProvider = ({
     const qMSG = publisher.consume.pop();
     if (qMSG) webSocketMessageSender(qMSG);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastestGQM, _globalQueue.length]);
+  }, [lastestGQM, _globalQueue.length, _globalQueue]);
 
   useEffect(() => {
     setWebSocketState(readyState);

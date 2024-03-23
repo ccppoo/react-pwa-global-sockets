@@ -7,7 +7,6 @@ import { useRecoilState, selectorFamily, useRecoilValue } from 'recoil';
 interface subsciberOptions {
   url: string;
   topic: string;
-  max?: number;
 }
 
 export const useSubsciber = (options: subsciberOptions) => {

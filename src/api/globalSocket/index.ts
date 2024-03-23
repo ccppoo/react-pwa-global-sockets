@@ -1,6 +1,6 @@
 import type {UseFullSocketConfig} from '@/socket/types'
 
-const DEV_backend = 'wss://localhost:8443/dev';
+const DEV_backend = 'wss://localhost:8443';
 
 type PongMSG = { pong: string };
 
@@ -11,7 +11,7 @@ type PongMSG = { pong: string };
  */
 export const mainSocketConfig : (id : number) => UseFullSocketConfig =  (id : number) => {
   return {
-  url: `${DEV_backend}/${id}`,
+  url: `${DEV_backend}/dev/${id}`,
   onOpen: () => {
     console.log(`global socket connected`);
   },
@@ -28,3 +28,21 @@ export const mainSocketConfig : (id : number) => UseFullSocketConfig =  (id : nu
   topicEnqueueMax : 10
 };
 } 
+
+export const echoSocketConfig =   {
+  url: `${DEV_backend}/echo`,
+  onOpen: () => {
+    console.log(`echo socket connected`);
+  },
+  messageReceivers: {
+    pong :(msg: PongMSG) => {
+            msg;
+         }
+  }, 
+  messageSenders: {
+    echo: (data : any) => {
+      return { topic : 'echo', ...data };
+    },
+  },
+  topicEnqueueMax : 1
+};
