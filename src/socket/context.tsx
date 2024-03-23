@@ -2,7 +2,7 @@ import React, { ReactNode, createContext, useEffect } from 'react';
 
 import useWebSocket from 'react-use-websocket';
 
-import useGlobalQueue from './globalQueue';
+import { useSubscriberQueue, usePublisherQueue } from './globalQueue';
 import { WebSocketMessageReceiver } from './receiver';
 import { useGlobalWebSocketState } from './globalQueue';
 import { WebSocketMessageSender } from './sender';
@@ -17,13 +17,23 @@ export const UseFullWebSocketProvider = ({
   children: ReactNode;
   config: UseFullSocketConfig;
 }) => {
+  // @ts-ignore ts(2783)
   const _config = { topicEnqueueMax: 30, ...config };
   const { url, onOpen, messageSenders, messageReceivers, topicEnqueueMax } = _config;
 
-  const { lastestGQM, _globalQueue, system } = useGlobalQueue({
+  const { system } = useSubscriberQueue({
     WebSocket_URL: url,
     topicEnqueueMax: topicEnqueueMax,
   });
+
+  const {
+    lastestGQM,
+    _globalQueue,
+    system: publisher,
+  } = usePublisherQueue({
+    WebSocket_URL: url,
+  });
+
   const { setWebSocketState } = useGlobalWebSocketState({ WebSocket_URL: url });
 
   const { readyState, sendJsonMessage } = useWebSocket(url, {
@@ -40,7 +50,7 @@ export const UseFullWebSocketProvider = ({
 
   useEffect(() => {
     if (_globalQueue.length < 1) return;
-    const qMSG = system.consume.pop();
+    const qMSG = publisher.consume.pop();
     if (qMSG) webSocketMessageSender(qMSG);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastestGQM, _globalQueue.length]);

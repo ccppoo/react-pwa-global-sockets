@@ -1,15 +1,16 @@
-import React, { ReactNode, createContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import useGlobalQueue from './globalQueue';
+import { UseFullSocketAtom as ufsAtom, usePublisherQueue } from './globalQueue';
+import { useRecoilState, selectorFamily, useRecoilValue } from 'recoil';
 
 export const usePublisher = ({ url, topic }: { url: string; topic: string }) => {
-  const { system } = useGlobalQueue({ WebSocket_URL: url });
+  const { system } = usePublisherQueue({ WebSocket_URL: url });
 
-  function sendMessage(obj: any) {
+  function publishMessage(obj: any) {
     system.enqueueMsg({ topic: topic, ...obj });
   }
 
   return {
-    send: sendMessage,
+    publish: publishMessage,
   };
 };
